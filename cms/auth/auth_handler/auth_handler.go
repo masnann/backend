@@ -20,7 +20,7 @@ func Login(ctx *fiber.Ctx) error {
 		return err
 	}
 	log.Println(loginRequest)
-	//validasi request
+	//Validasi request
 	validate := validator.New()
 	errValidate := validate.Struct(loginRequest)
 	if errValidate != nil {
@@ -35,7 +35,7 @@ func Login(ctx *fiber.Ctx) error {
 	err := database.DB.First(&user, "email = ?", loginRequest.Email).Error
 	if err != nil {
 		return ctx.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "Email salah",
+			"message": "Email atau password salah",
 		})
 	}
 
@@ -43,7 +43,7 @@ func Login(ctx *fiber.Ctx) error {
 	isValid := utils.CheckPasswordHash(loginRequest.Password, user.Password)
 	if !isValid {
 		return ctx.Status(fiber.StatusUnauthorized).JSON(fiber.Map{
-			"message": "Password salah",
+			"message": "Email atau password salah",
 		})
 	}
 
