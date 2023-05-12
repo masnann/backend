@@ -9,9 +9,10 @@ type RequestUserInsert struct {
 }
 
 type RequestUserUpdate struct {
-	Name    string `json:"name" `
-	Address string `json:"address"`
-	Phone   string `json:"phone"`
+	Name     string `json:"name" `
+	Address  string `json:"address"`
+	Phone    string `json:"phone"`
+	Password string `json:"password"`
 }
 
 type RequsetUserUpdateEmail struct {

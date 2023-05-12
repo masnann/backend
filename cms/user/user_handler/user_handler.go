@@ -121,8 +121,20 @@ func UserHandlerUpdate(ctx *fiber.Ctx) error {
 	if userUpdate.Address != "" {
 		user.Address = userUpdate.Address
 	}
+
 	if userUpdate.Phone != "" {
 		user.Phone = userUpdate.Phone
+	}
+	if userUpdate.Password != "" {
+		// Hash password baru
+		hashedPassword, err := utils.HashingPassword(userUpdate.Password)
+		if err != nil {
+			log.Println(err)
+			return ctx.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+				"message": "Internal Server Error",
+			})
+		}
+		user.Password = hashedPassword
 	}
 
 	errUpdate := database.DB.Save(&user).Error
