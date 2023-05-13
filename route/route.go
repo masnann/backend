@@ -2,6 +2,7 @@ package route
 
 import (
 	"backend/cms/auth/auth_handler"
+	"backend/cms/book/book_handler"
 	"backend/cms/user/user_handler"
 	"backend/middleware"
 	"github.com/gofiber/fiber/v2"
@@ -19,4 +20,7 @@ func RouteInit(r *fiber.App) {
 
 	// Route Login
 	r.Post("/login", auth_handler.Login)
+
+	// Route Book
+	r.Post("/book/create", book_handler.BookHandlerCreate)
 }

@@ -6,7 +6,7 @@ import (
 )
 
 type UserModel struct {
-	ID        uint           `json:"id" gorm:"primary-key"`
+	ID        uint           `json:"id" gorm:"primarykey"`
 	Name      string         `json:"name"`
 	Email     string         `json:"email"`
 	Password  string         `json:"-" gorm:"column:password"`
