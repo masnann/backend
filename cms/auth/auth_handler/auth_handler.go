@@ -50,7 +50,7 @@ func Login(ctx *fiber.Ctx) error {
 	// Generate JWT
 	claims := jwt.MapClaims{}
 	claims["email"] = user.Email
-	claims["exp"] = time.Now().Add(time.Minute * 2).Unix()
+	claims["exp"] = time.Now().Add(time.Minute * 72).Unix()
 
 	if user.Email == "Anan@gmail.com" {
 		claims["role"] = "admin"

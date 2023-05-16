@@ -24,29 +24,22 @@ func BookHandlerCreate(ctx *fiber.Ctx) error {
 			"error":   errValidate.Error(),
 		})
 	}
-	//Upload file
-	file, errFile := ctx.FormFile("cover")
-	if errFile != nil {
-		log.Println("Error File = ", errFile)
-	}
-	//Logic jika tidak upload file
-
-	var filename string
-	if file != nil {
-		filename = file.Filename
-		errSaveFile := ctx.SaveFile(file, fmt.Sprintf("./utils/images/%s", filename))
-
-		if errSaveFile != nil {
-			log.Println("Failed to store file into images")
-		}
+	// Validasi Required Images
+	var filenameString string
+	filename := ctx.Locals("filename")
+	log.Println("filename", filename)
+	if filename == nil {
+		return ctx.Status(422).JSON(fiber.Map{
+			"message": "image is required",
+		})
 	} else {
-		log.Println("Nothing file to uploading.")
+		filenameString = fmt.Sprintf("%v", filename)
 	}
 
 	newBook := book_domain.BookModels{
 		Title:  book.Title,
 		Author: book.Author,
-		Cover:  filename,
+		Cover:  filenameString,
 	}
 
 	errCreateUser := database.DB.Create(&newBook).Error
